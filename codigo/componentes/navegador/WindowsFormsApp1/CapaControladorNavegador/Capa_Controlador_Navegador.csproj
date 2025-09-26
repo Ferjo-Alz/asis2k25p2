@@ -49,8 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Capa_Modelo_Navegador">
-      <HintPath>..\CapaModeloNavegador\bin\Debug\Capa_Modelo_Navegador.dll</HintPath>
+    <Reference Include="Capa_Modelo_Navegador, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\x86\Debug\Capa_Modelo_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
