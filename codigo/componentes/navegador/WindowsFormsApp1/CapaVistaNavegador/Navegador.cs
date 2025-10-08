@@ -120,7 +120,7 @@ namespace Capa_Vista_Navegador
             Btn_guardar.Enabled = false;
             Btn_cancelar.Enabled = false;
             Btn_eliminar.Enabled = false;
-            Btn_consultar.Enabled = true;
+            Btn_consultar.Enabled = false;
             Btn_imprimir.Enabled = true;
             Btn_refrescar.Enabled = false;
             Btn_inicio.Enabled = false;

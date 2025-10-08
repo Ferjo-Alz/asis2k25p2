@@ -21,7 +21,7 @@ namespace Capa_Modelo_Navegador
 
         //Conexion  de la base de datos aqui
         //Mapeado de base de datos, para conocer que tipo de dato es según el atributo (int, string, bool, datetime, decimal)
-        private OdbcType MapeadoTipoDatos(object valor)
+        public OdbcType MapeadoTipoDatos(object valor)
         {
             if (valor is int || valor is short || valor is long) return OdbcType.Int;
             if (valor is DateTime) return OdbcType.DateTime;

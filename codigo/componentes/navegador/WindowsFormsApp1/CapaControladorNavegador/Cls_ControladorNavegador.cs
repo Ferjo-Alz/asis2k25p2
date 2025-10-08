@@ -101,40 +101,40 @@ namespace Capa_Controlador_Navegador
                 // Calcular la posición X para el ComboBox justo después del Label
                 int comboX = lbl.Location.X + textSize.Width + 5; // margen de 5 px
 
-                ComboBox cbo = new ComboBox
-                {
-                    Name = "Cbo_" + campo,
-                    Font = new Font("Rockwell", 10, FontStyle.Regular),
-                    Width = 150,
-                    Location = new Point(comboX, posY)
-                };
-
-                // Agregar items al ComboBox
-                try
-                {
-                    List<string> items = sentencias.ObtenerValoresColumna(SAlias[0], campo);
-                    cbo.Items.AddRange(items.ToArray());
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al cargar {campo}: {ex.Message}");
-                }
-
-                // Bloquear PK
-                if (creados == 0)
-                {
-                    cbo.SelectedIndexChanged += (s, e) =>
+                    ComboBox cbo = new ComboBox
                     {
-                        if (cbo.SelectedIndex >= 0)
-                            cbo.Enabled = false;
+                        Name = "Cbo_" + campo,
+                        Font = new Font("Rockwell", 10, FontStyle.Regular),
+                        Width = 150,
+                        Location = new Point(comboX, posY)
                     };
-                }
 
-                // Agregar a listas
-                labels.Add(lbl);
-                combos.Add(cbo);
-                creados++;
+                    // Agregar items al ComboBox
+                    try
+                    {
+                        List<string> items = sentencias.ObtenerValoresColumna(SAlias[0], campo);
+                        cbo.Items.AddRange(items.ToArray());
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al cargar {campo}: {ex.Message}");
+                    }
 
+                    // Bloquear PK
+                    if (creados == 0)
+                    {
+                        cbo.SelectedIndexChanged += (s, e) =>
+                        {
+                            if (cbo.SelectedIndex >= 0)
+                                cbo.Enabled = false;
+                        };
+                    }
+
+                    // Agregar a listas
+                    labels.Add(lbl);
+                    combos.Add(cbo);
+                    creados++;
+                
                 // Avanzar a la siguiente columna
                 columna++;
 

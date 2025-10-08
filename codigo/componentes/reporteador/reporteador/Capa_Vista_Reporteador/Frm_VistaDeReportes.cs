@@ -42,36 +42,34 @@ namespace Capa_Vista_Reporteador
                 ReportDocument reporte = new ReportDocument();
                 reporte.Load(ruta);
 
-                // Configuración de conexión ODBC
-                ConnectionInfo connection = new ConnectionInfo
-                {
-                    ServerName = "bd_hoteleria", // DNS ODBC configurado
-                    IntegratedSecurity = true    // Cambiar a false si usas usuario/contraseña
-                };
+                // 🔧 Configurar conexión MySQL ODBC (DSN = Prueba1)
+                ConnectionInfo connectionInfo = new ConnectionInfo();
+                connectionInfo.ServerName = "Prueba1";       // Nombre del DSN
+                connectionInfo.DatabaseName = "bd_hoteleria"; // Nombre de la base
+                connectionInfo.UserID = "pedro";             // Usuario MySQL
+                connectionInfo.Password = "tu_contraseña";   // Contraseña real
+                connectionInfo.IntegratedSecurity = false;   // ❗ Importante: usar credenciales, no Windows
 
-                void AplicarConexion(Database db)
+                // 🔁 Aplicar conexión a todas las tablas del reporte
+                foreach (Table table in reporte.Database.Tables)
                 {
-                    foreach (Table tabla in db.Tables)
+                    TableLogOnInfo logonInfo = table.LogOnInfo;
+                    logonInfo.ConnectionInfo = connectionInfo;
+                    table.ApplyLogOnInfo(logonInfo);
+                }
+
+                // 🔁 También aplicar a subreportes (si existen)
+                foreach (ReportDocument subreport in reporte.Subreports)
+                {
+                    foreach (Table table in subreport.Database.Tables)
                     {
-                        TableLogOnInfo logon = tabla.LogOnInfo;
-                        logon.ConnectionInfo = connection;
-                        tabla.ApplyLogOnInfo(logon);
-
-                        // Refrescar ubicación
-                        tabla.Location = tabla.Location;
+                        TableLogOnInfo logonInfo = table.LogOnInfo;
+                        logonInfo.ConnectionInfo = connectionInfo;
+                        table.ApplyLogOnInfo(logonInfo);
                     }
                 }
 
-                // Aplicar conexión al reporte principal
-                AplicarConexion(reporte.Database);
-
-                // Aplicar a los subreportes si existen
-                foreach (ReportDocument sub in reporte.Subreports)
-                {
-                    AplicarConexion(sub.Database);
-                }
-
-                // Mostrar en el visor
+                // 🧾 Mostrar en el visor
                 crystalReportViewer1.ReportSource = reporte;
                 crystalReportViewer1.Refresh();
             }
@@ -80,6 +78,7 @@ namespace Capa_Vista_Reporteador
                 MessageBox.Show("Error al cargar el reporte: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         //Fin de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
 
 
