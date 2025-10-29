@@ -28,7 +28,7 @@ namespace PruebaEjecucionNavegador
             };
 
                         string[] columnas = {
-                "tbl_usuario",
+                "Tbl_Usuario",
                 "Pk_Id_Usuario",
                 "Fk_Id_Empleado",
                 "Cmp_Nombre_Usuario",
