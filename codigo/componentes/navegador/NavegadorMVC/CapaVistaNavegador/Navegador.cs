@@ -119,12 +119,10 @@ namespace Capa_Vista_Navegador
         {
             if (Dgv_Datos == null)
             {
-                //llama metodo de creacion DGV
-                DataGridView dgv = ctrl.CrearDataGridView();
-
-                // ======================= Stevens Cambranes = 20/09/2025 =======================
+                Dgv_Datos = ctrl.CrearDataGridView(); // <--- asignar correctamente
                 ctrl.AsignarDataGridView(Dgv_Datos);
                 Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
+                this.Controls.Add(Dgv_Datos); // <--- asegurarte de mostrarlo
             }
 
             // Asegurarse de que alias no sea null
@@ -136,7 +134,8 @@ namespace Capa_Vista_Navegador
 
             dtCompleto = ctrl.LlenarTabla(SAlias[0], SAlias.Skip(1).ToArray());
             Dgv_Datos.DataSource = dtCompleto;
-
+            foreach (DataGridViewColumn col in Dgv_Datos.Columns)
+                col.ReadOnly = true;
             // Enganchar el evento solo una vez
             Dgv_Datos.DataBindingComplete -= Dgv_Datos_DataBindingComplete;
             Dgv_Datos.DataBindingComplete += Dgv_Datos_DataBindingComplete;
@@ -330,7 +329,7 @@ namespace Capa_Vista_Navegador
             ctrl.RellenarCombosDesdeFila(this, SAlias, Dgv_Datos.CurrentRow);
 
             // Obtener permisos del usuario conectado
-            Cls_Privilegios_Seguridad privilegios = new Cls_Privilegios_Seguridad();
+            /*Cls_Privilegios_Seguridad privilegios = new Cls_Privilegios_Seguridad();
             Cls_Permiso_Aplicacion_Usuario permisos = privilegios.VerificarPermisos(IPkId_Aplicacion, IPkId_Modulo);
 
 
@@ -341,7 +340,7 @@ namespace Capa_Vista_Navegador
                 permisos.Cmp_Eliminar_Permiso_Aplicacion_Usuario,
                 false,
                 permisos.Cmp_Imprimir_Permiso_Aplicacion_Usuario
-            );
+            );*/
             //BotonesEstadoEdicion(); // KEVIN NATARENO 11/10/2025
 
             // Bloquear (deshabilitar) todos los ComboBox del formulario
